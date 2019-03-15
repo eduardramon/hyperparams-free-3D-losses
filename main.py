@@ -35,12 +35,12 @@ i = keras.layers.Input((32, 32, 3)) # Assuming images of 32x32x2
 x = keras.layers.Flatten()(i)
 q = keras.layers.Dense(4)(x)                    # Output for quaternion
 t = keras.layers.Dense(3)(x)                    # Output for translation
-c = keras.layers.Dense(M)(x)                    # Output for coefficients
-x = keras.layers.Dense(3*N, trainable=False)(c) # Output for shape
+c = keras.layers.Dense(M)(x)                    # Output for 3DMM coefficients
+x = keras.layers.Dense(3*N, trainable=False)(c) # Output for 3D shape
                                                 # Tip: Proper initializaer can plug 3DMM into Dense
 
 #   3. Output layer
-o = keras.layers.concatenate( [ q, t, x ], axis=-1 )
+o = keras.layers.Concatenate(axis=-1)([q, t, x])
 
 #   4. Model
 model = keras.models.Model(inputs=i, outputs=o)
