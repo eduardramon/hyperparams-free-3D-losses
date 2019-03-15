@@ -25,7 +25,7 @@ N = 5           # 3D Shape points
 M = 2           # Basis
 K = np.eye(3,3) # Camera calibration
 B = 4           # Batch size
-V = 2			# Random views
+V = 2           # Random views
 
 # Model
 #   1. Input layer
@@ -49,7 +49,7 @@ model = keras.models.Model(inputs=i, outputs=o)
 # Training
 #   1. Compile model
 xqt          = losses.xqt(shape_points=N, beta=1.,gamma=1.)
-gal 	     = losses.geometric_alignment(shape_points=N)
+gal          = losses.geometric_alignment(shape_points=N)
 reprojection = losses.reprojection(shape_points=N, calibration=K)
 mrl          = losses.multiview_reprojection(shape_points=N, calibration=K, virtual_views=V)
 model.compile( optimizer=keras.optimizers.Adam(), loss=mrl)
