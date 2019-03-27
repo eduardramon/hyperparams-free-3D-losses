@@ -4,6 +4,7 @@ import lib.losses as losses
 import tensorflow as tf
 import tensorflow.keras as keras
 
+
 # This is an example on how to plug the losses into your model
 # Assumptions
 #   - 3DMM defined with:
@@ -20,12 +21,14 @@ import tensorflow.keras as keras
 #   - Camera calibration K = [3,3]
 #   - Random views V concatenated at the end of y_true
 
+
 # Constants
 N = 5           # 3D Shape points
 M = 2           # Basis
 K = np.eye(3,3) # Camera calibration
 B = 4           # Batch size
 V = 2           # Random views
+
 
 # Model
 #   1. Input layer
@@ -52,7 +55,7 @@ xqt          = losses.xqt(shape_points=N, beta=1.,gamma=1.)
 gal          = losses.geometric_alignment(shape_points=N)
 reprojection = losses.reprojection(shape_points=N, calibration=K)
 mrl          = losses.multiview_reprojection(shape_points=N, calibration=K, virtual_views=V)
-model.compile( optimizer=keras.optimizers.Adam(), loss=mrl)
+model.compile(optimizer=keras.optimizers.Adam(), loss=mrl)
 
 #   2. Load data
 X = np.random.rand(4*B, 32, 32, 3)
