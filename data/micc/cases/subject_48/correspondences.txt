@@ -1,0 +1,4 @@
+right_eye_lacrimal 30600
+left_eye_lacrimal 11438
+nose_base 1725
+lips_central 8047
