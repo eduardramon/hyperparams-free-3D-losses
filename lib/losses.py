@@ -18,9 +18,9 @@ from .layers import *
 # Loss = ( alpha * || s - s ||2 + beta * || q - q ||2 + gamma * || p - p ||2 ) / (alpha + beta + gamma)
 # NOTE: Alpha is fixed to 1.
 def xqt(shape_points, beta, gamma):
-    A = K.constant(1. / (1. + beta + gamma))
-    B = K.constant(beta / (1. + beta + gamma))
-    G = K.constant(gamma / (1. + beta + gamma))
+    A = K.constant(1.)
+    B = K.constant(beta)
+    G = K.constant(gamma)
     mse = tf.keras.losses.mean_squared_error
 
     def xqt_loss(y_true, y_pred):

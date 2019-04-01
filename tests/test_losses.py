@@ -52,7 +52,7 @@ class TestLosses(unittest.TestCase):
 
         loss_np = (1. * mse(y_pred[:, 7:7 + 2 * 3], y_true[:, 7:7 + 2 * 3]) +
         	       1e-2 * mse(y_pred[:, :4], y_true[:, :4]) +
-                   1e-3 * mse(y_pred[:, 4:7], y_true[:, 4:7])) / (1. + 1e-2 + 1e-3)
+                   1e-3 * mse(y_pred[:, 4:7], y_true[:, 4:7]))
 
         self.assertAlmostEqual(loss_tf[0], loss_np[0], places=4)
 
