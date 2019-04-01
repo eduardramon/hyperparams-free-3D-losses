@@ -15,7 +15,20 @@ from .layers import *
 #   y_mrl.shape = [ 1, 4 + 3 + 3*Points3D + 7*RandomViewa ]
 
 
-# Loss = ( alpha * || s - s ||2 + beta * || q - q ||2 + gamma * || p - p ||2 ) / (alpha + beta + gamma)
+# Loss = alpha * || s - s' ||2 + beta * || [q|t] - [q'|t'] ||2
+# NOTE: Alpha is fixed to 1.
+def coarse(shape_points, beta):
+    A = K.constant(1.)
+    B = K.constant(beta)
+    mse = tf.keras.losses.mean_squared_error
+
+    def coarse_loss(y_true, y_pred):
+        return A * mse(y_pred[:, 7:7 + 3 * shape_points], y_true[:, 7:7 + 3 * shape_points]) + \
+               B * mse(y_pred[:, :7], y_true[:, :7])
+
+    return coarse_loss
+
+# Loss = alpha * || s - s' ||2 + beta * || q - q' ||2 + gamma * || t - t' ||2
 # NOTE: Alpha is fixed to 1.
 def xqt(shape_points, beta, gamma):
     A = K.constant(1.)

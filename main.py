@@ -51,6 +51,7 @@ model = keras.models.Model(inputs=i, outputs=o)
 
 # Training
 #   1. Compile model
+coarse       = losses.coarse(shape_points=N, beta=1.)
 xqt          = losses.xqt(shape_points=N, beta=1.,gamma=1.)
 gal          = losses.geometric_alignment(shape_points=N)
 reprojection = losses.reprojection(shape_points=N, calibration=K)

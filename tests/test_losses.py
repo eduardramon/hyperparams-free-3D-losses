@@ -38,6 +38,24 @@ def create_y_true_y_pred():
 # Tests
 class TestLosses(unittest.TestCase):
 
+    def test_coarse(self):
+        # Create test samples
+        y_true, y_pred = create_y_true_y_pred()
+
+        loss = losses.coarse(
+            shape_points=2, beta=1e-2)(K.variable(y_true),
+                                       K.variable(y_pred))
+
+        loss_tf = K.eval(loss)
+
+        mse = lambda x, y: ((x - y)**2).mean(axis=-1)
+
+        loss_np = 1. * mse(y_pred[:, 7:7 + 2 * 3], y_true[:, 7:7 + 2 * 3]) + \
+                  1e-2 * mse(y_pred[:, :7], y_true[:, :7])
+
+        self.assertAlmostEqual(loss_tf[0], loss_np[0], places=4)
+
+
     def test_xqt(self):
         # Create test samples
         y_true, y_pred = create_y_true_y_pred()
